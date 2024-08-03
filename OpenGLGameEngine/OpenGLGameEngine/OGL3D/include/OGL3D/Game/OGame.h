@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-
+#include <OGL3D/OPrerequisites.h>
 class OGraphicsEngine;
 class OWindow;
 class OGame
@@ -20,4 +20,6 @@ protected:
 	bool m_isRunning = true;
 	std::unique_ptr<OGraphicsEngine> m_graphicsEngine;
 	std::unique_ptr<OWindow> m_display;
+
+	OVertexArrayObjectPtr m_triangleVAO;
 };
