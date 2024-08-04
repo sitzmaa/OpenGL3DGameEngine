@@ -52,10 +52,10 @@ OGraphicsEngine::OGraphicsEngine()
 	wglMakeCurrent(dummyDC, dummyContext); // associate the context w/ descriptor
 
 	if (!gladLoadWGL(dummyDC)) // GLAD load descriptor
-		throw std::runtime_error("OGraphicsEngine - Error - gladLoadWGL failed");
+		OGL3D_ERROR("OGraphicsEngine - Error - gladLoadWGL failed");
 
 	if (!gladLoadGL()) // GLAD load
-		throw std::runtime_error("OGraphicsEngine - Error - gladLoadGL failed");
+		OGL3D_ERROR("OGraphicsEngine - Error - gladLoadGL failed");
 	// Trhow on failure
 
 	wglMakeCurrent(dummyDC, 0); // unlink context

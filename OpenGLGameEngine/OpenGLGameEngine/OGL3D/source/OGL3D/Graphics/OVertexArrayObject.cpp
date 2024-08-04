@@ -2,19 +2,31 @@
 #include <glad/glad.h>
 
 
-OVertexArrayObject::OVertexArrayObject(const OVertexBufferData& data)
+OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& data)
 {
-
-	glGenBuffers(1,&m_vertexBufferId); // Generate A buffer and attach
+	if (!data.listSize) OGL3D_ERROR("OVertexArrayObject | listSize is NULL");
+	if (!data.vertexSize) OGL3D_ERROR("OVertexArrayObject | vertexSize is NULL");
+	if (!data.verticesList) OGL3D_ERROR("OVertexArrayObject | verticesList is NULL");
 
 	glGenVertexArrays(1, &m_vertexArrayObjectId);
 	glBindVertexArray(m_vertexArrayObjectId); // Create and bind array
 
+	glGenBuffers(1,&m_vertexBufferId); // Generate a buffer
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId); // bind ID
 	glBufferData(GL_ARRAY_BUFFER, data.vertexSize*data.listSize,data.verticesList,GL_STATIC_DRAW); // buffer input data
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, data.vertexSize, 0);
-	glEnableVertexAttribArray(0);
+	for (ui32 i = 0; i < data.attributeListSize; i++)
+	{
+		glVertexAttribPointer(
+			i,
+			data.attributeList[i].numElements,
+			GL_FLOAT,
+			GL_FALSE,
+			data.vertexSize,
+			(void*)((i == 0)?0: data.attributeList[i-1].numElements*sizeof(f32))
+		);
+		glEnableVertexAttribArray(i);
+	}
 
 	glBindVertexArray(0); // Signal done
 
