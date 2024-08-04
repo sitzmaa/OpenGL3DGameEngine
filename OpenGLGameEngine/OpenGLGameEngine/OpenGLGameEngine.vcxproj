@@ -141,6 +141,7 @@
     <ClCompile Include="OGL3D\vendor\glad\src\glad_wgl.c" />
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OVertexArrayObject.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OShaderProgram.cpp" />
+    <ClCompile Include="OGL3D\source\OGL3D\Graphics\OUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGL3D\include\OGL3D\Game\OGame.h" />
@@ -151,6 +152,7 @@
     <ClInclude Include="OGL3D\include\OGL3D\Graphics\OGraphicsEngine.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Graphics\OVertexArrayObject.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Graphics\OShaderProgram.h" />
+    <ClInclude Include="OGL3D\include\OGL3D\Graphics\OUniformBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\BasicShader.frag" />

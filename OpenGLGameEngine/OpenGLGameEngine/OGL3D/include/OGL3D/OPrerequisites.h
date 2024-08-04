@@ -4,9 +4,11 @@
 #include <iostream>
 #include <stdexcept>
 class OVertexArrayObject;
+class OUniformBuffer;
 class OShaderProgram;
 
 typedef  std::shared_ptr < OVertexArrayObject> OVertexArrayObjectPtr;
+typedef  std::shared_ptr < OUniformBuffer> OUniformBufferPtr;
 typedef  std::shared_ptr < OShaderProgram> OShaderProgramPtr;
 
 
@@ -33,6 +35,17 @@ struct OShaderProgramDesc
 {
 	const wchar_t* vertexShaderFilePath;
 	const wchar_t* fragmentShaderFilePath;
+};
+
+struct OUniformBufferDesc
+{
+	ui32 size = 0;
+};
+
+enum OTriangleType
+{
+	TriangleList = 0,
+	TriangleStrip
 };
 
 enum OShaderType
