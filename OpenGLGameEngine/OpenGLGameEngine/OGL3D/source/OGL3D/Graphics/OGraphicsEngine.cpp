@@ -6,9 +6,14 @@
 #include "assert.h"
 #include "stdexcept"
 
-OVertexArrayObjectPtr OGraphicsEngine::createVertexArrayObject(const OVertexBufferDesc& data)
+OVertexArrayObjectPtr OGraphicsEngine::createVertexArrayObject(const OVertexBufferDesc& vbDesc)
 {
-	return std::make_shared<OVertexArrayObject>(data);
+	return std::make_shared<OVertexArrayObject>(vbDesc);
+}
+
+OVertexArrayObjectPtr OGraphicsEngine::createVertexArrayObject(const OVertexBufferDesc& vbDesc, const OIndexBufferDesc& ibDesc)
+{
+	return std::make_shared<OVertexArrayObject>(vbDesc, ibDesc);
 }
 
 OUniformBufferPtr OGraphicsEngine::createUniformBuffer(const OUniformBufferDesc& desc)
@@ -25,6 +30,28 @@ void OGraphicsEngine::clear(const OVec4& color)
 {
 	glClearColor(color.x, color.y, color.z, color.w);
 	glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void OGraphicsEngine::setFaceCulling(const OCullType& type)
+{
+	auto cullType = GL_BACK;
+	switch (type) {
+	case OCullType::FrontFace: { cullType = GL_FRONT; break;  }
+	case OCullType::BackFace: { cullType = GL_BACK; break;  }
+	case OCullType::Both: { cullType = GL_FRONT_AND_BACK; break;  }
+	}
+	glEnable(GL_CULL_FACE);
+	glCullFace(cullType);
+}
+
+void OGraphicsEngine::setWindingOrder(const OWindingOrder& order)
+{
+	auto orderType = GL_CW;
+
+	if (order == OWindingOrder::ClockWise) orderType = GL_CW;
+	else if (order == OWindingOrder::CounterClockWise) orderType = GL_CCW;
+
+	glFrontFace(orderType);
 }
 
 void OGraphicsEngine::setViewport(const ORect& size)
@@ -53,9 +80,21 @@ void OGraphicsEngine::drawTriangles(const OTriangleType& triangleType, ui32 vert
 
 	switch (triangleType)
 	{
-		case TriangleList: { glTriType = GL_TRIANGLES; break; }
-		case TriangleStrip: { glTriType = GL_TRIANGLE_STRIP; break; }
+	case OTriangleType::TriangleList: { glTriType = GL_TRIANGLES; break; }
+	case OTriangleType::TriangleStrip: { glTriType = GL_TRIANGLE_STRIP; break; }
 	}
 	glDrawArrays(glTriType, offset, vertexCount);
+}
+
+void OGraphicsEngine::drawIndexedTriangles(const OTriangleType& triangleType, ui32 indicesCount)
+{
+	auto glTriType = GL_TRIANGLES;
+
+	switch (triangleType)
+	{
+	case OTriangleType::TriangleList: { glTriType = GL_TRIANGLES; break; }
+	case OTriangleType::TriangleStrip: { glTriType = GL_TRIANGLE_STRIP; break; }
+	}
+	glDrawElements(glTriType, indicesCount, GL_UNSIGNED_INT, nullptr);
 }
 

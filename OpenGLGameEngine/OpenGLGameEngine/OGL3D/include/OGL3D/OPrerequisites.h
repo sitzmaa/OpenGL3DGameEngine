@@ -21,6 +21,7 @@ struct OVertexAttribute
 {
 	ui32 numElements = 0;
 };
+
 struct OVertexBufferDesc
 {
 	void* verticesList = nullptr;
@@ -29,6 +30,12 @@ struct OVertexBufferDesc
 
 	OVertexAttribute* attributeList = nullptr;
 	ui32 attributeListSize = 0;
+};
+
+struct OIndexBufferDesc
+{
+	void* indicesList = nullptr;
+	ui32 listSize = 0;
 };
 
 struct OShaderProgramDesc
@@ -42,13 +49,26 @@ struct OUniformBufferDesc
 	ui32 size = 0;
 };
 
-enum OTriangleType
+enum class OTriangleType
 {
 	TriangleList = 0,
 	TriangleStrip
 };
 
-enum OShaderType
+enum class OCullType
+{
+	BackFace = 0,
+	FrontFace,
+	Both
+};
+
+enum class OWindingOrder
+{
+	ClockWise = 0,
+	CounterClockWise
+};
+
+enum class OShaderType
 {
 	VertexShader = 0,
 	FragmentShader

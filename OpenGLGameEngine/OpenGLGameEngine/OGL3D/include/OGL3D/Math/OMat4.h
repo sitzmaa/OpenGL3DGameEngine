@@ -1,6 +1,6 @@
 #pragma once
 #include <OGL3D/OPrerequisites.h>
-#include <OGL3D/Math/OVec4.h>
+#include <OGL3D/Math/OVec3.h>
 
 
 class OMat4
@@ -20,14 +20,14 @@ public:
 		mat[3][3] = 1;
 	}
 
-	void setScale(const OVec4& scale)
+	void setScale(const OVec3& scale)
 	{
 		mat[0][0] = scale.x;
 		mat[1][1] = scale.y;
 		mat[2][2] = scale.z;
 	}
 
-	void setTranslation(const OVec4& translation)
+	void setTranslation(const OVec3& translation)
 	{
 		mat[3][0] = translation.x;
 		mat[3][1] = translation.y;
@@ -73,6 +73,15 @@ public:
 		}
 
 		*this = out;
+	}
+
+	void setOrthoLH(f32 width, f32 height, f32 nearPlane, f32 farPlane)
+	{
+		mat[0][0] = 2.0f / width;
+		mat[1][1] = 2.0f / height;
+		mat[2][2] = 1.0f / (farPlane - nearPlane);
+		mat[3][2] = -(nearPlane / (farPlane - nearPlane));
+
 	}
 
 

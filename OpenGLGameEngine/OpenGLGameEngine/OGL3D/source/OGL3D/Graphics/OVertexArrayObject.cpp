@@ -2,40 +2,56 @@
 #include <glad/glad.h>
 
 
-OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& data)
+OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& vbDesc)
 {
-	if (!data.listSize) OGL3D_ERROR("OVertexArrayObject | listSize is NULL");
-	if (!data.vertexSize) OGL3D_ERROR("OVertexArrayObject | vertexSize is NULL");
-	if (!data.verticesList) OGL3D_ERROR("OVertexArrayObject | verticesList is NULL");
+	if (!vbDesc.listSize) OGL3D_ERROR("OVertexArrayObject | listSize is NULL");
+	if (!vbDesc.vertexSize) OGL3D_ERROR("OVertexArrayObject | vertexSize is NULL");
+	if (!vbDesc.verticesList) OGL3D_ERROR("OVertexArrayObject | verticesList is NULL");
 
 	glGenVertexArrays(1, &m_vertexArrayObjectId);
 	glBindVertexArray(m_vertexArrayObjectId); // Create and bind array
 
 	glGenBuffers(1,&m_vertexBufferId); // Generate a buffer
 	glBindBuffer(GL_ARRAY_BUFFER, m_vertexBufferId); // bind ID
-	glBufferData(GL_ARRAY_BUFFER, data.vertexSize*data.listSize,data.verticesList,GL_STATIC_DRAW); // buffer input data
+	glBufferData(GL_ARRAY_BUFFER, vbDesc.vertexSize* vbDesc.listSize, vbDesc.verticesList,GL_STATIC_DRAW); // buffer input data
 
-	for (ui32 i = 0; i < data.attributeListSize; i++)
+	for (ui32 i = 0; i < vbDesc.attributeListSize; i++)
 	{
 		glVertexAttribPointer(
 			i,
-			data.attributeList[i].numElements,
+			vbDesc.attributeList[i].numElements,
 			GL_FLOAT,
 			GL_FALSE,
-			data.vertexSize,
-			(void*)((i == 0)?0: data.attributeList[i-1].numElements*sizeof(f32))
+			vbDesc.vertexSize,
+			(void*)((i == 0)?0: vbDesc.attributeList[i-1].numElements*sizeof(f32))
 		);
 		glEnableVertexAttribArray(i);
 	}
 
 	glBindVertexArray(0); // Signal done
 
-	m_vertexBufferData = data;
+	m_vertexBufferData = vbDesc;
+
+}
+
+OVertexArrayObject::OVertexArrayObject(const OVertexBufferDesc& vbDesc, const OIndexBufferDesc& ibDesc):OVertexArrayObject(vbDesc)
+{
+	if (!ibDesc.listSize) OGL3D_ERROR("OVertexArrayObject | listSize is NULL");
+	if (!ibDesc.indicesList) OGL3D_ERROR("OVertexArrayObject | indicesList is NULL");
+
+	glBindVertexArray(m_vertexArrayObjectId); // Create and bind array
+
+	glGenBuffers(1, &m_elementBufferId); // Generate a buffer
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_elementBufferId); // bind ID
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, ibDesc.listSize, ibDesc.indicesList, GL_STATIC_DRAW); // buffer input data
+
+	glBindVertexArray(0); // Signal done
 
 }
 
 OVertexArrayObject::~OVertexArrayObject()
 {
+	glDeleteBuffers(1, &m_elementBufferId);
 	glDeleteBuffers(1, &m_vertexBufferId);
 	glDeleteVertexArrays(1, &m_vertexArrayObjectId);
 }
