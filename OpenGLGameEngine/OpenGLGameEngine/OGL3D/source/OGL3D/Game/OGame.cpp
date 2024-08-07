@@ -7,6 +7,7 @@
 #include <OGL3D/Math/OMat4.h>
 #include <OGL3D/Math/OVec3.h>
 #include <OGL3D/Math/OVec2.h>
+#include <OGL3D/Entity/OEntitySystem.h>
 
 struct UniformData
 {
@@ -17,13 +18,14 @@ struct UniformData
 struct Vertex
 {
 	OVec3 position;
-	OVec2 texcoord;
+	OVec3 texcoord;
 };
 
 OGame::OGame()
 {
 	m_graphicsEngine = std::make_unique<OGraphicsEngine>();
 	m_display = std::make_unique<OWindow>();
+	m_entitySystem = std::make_unique<OEntitySystem>();
 
 	m_display->makeCurrentContext();
 
@@ -51,50 +53,51 @@ void OGame::onCreate()
 		OVec3(-0.5f,-0.5f,0.5f),
 	};
 
-	OVec2 texcoordsList[] =
+	OVec3 texcoordsList[] =
 	{
-		OVec2(0,0),
-		OVec2(0,1),
-		OVec2(1,0),
-		OVec2(1,1),
+		OVec3(0,0,0),
+		OVec3(0,1,0),
+		OVec3(1,0,0),
+		OVec3(0,0,1),
+		OVec3(1,0,1),
 	};
 
 	Vertex verticesList[] =
 	{
 		// front Face
-		{positionsList[0],texcoordsList[1]},
-		{positionsList[1],texcoordsList[0]},
-		{positionsList[2],texcoordsList[2]},
-		{positionsList[3],texcoordsList[3]},
+		{positionsList[0],texcoordsList[4]},
+		{positionsList[1],texcoordsList[4]},
+		{positionsList[2],texcoordsList[4]},
+		{positionsList[3],texcoordsList[4]},
 		
 		// back Face
-		{positionsList[4],texcoordsList[1]},
-		{positionsList[5],texcoordsList[0]},
-		{positionsList[6],texcoordsList[2]},
-		{positionsList[7],texcoordsList[3]},
+		{positionsList[4],texcoordsList[4]},
+		{positionsList[5],texcoordsList[4]},
+		{positionsList[6],texcoordsList[4]},
+		{positionsList[7],texcoordsList[4]},
 
 		// top Face
-		{positionsList[1],texcoordsList[1]},
-		{positionsList[6],texcoordsList[0]},
+		{positionsList[1],texcoordsList[2]},
+		{positionsList[6],texcoordsList[2]},
 		{positionsList[5],texcoordsList[2]},
-		{positionsList[2],texcoordsList[3]},
+		{positionsList[2],texcoordsList[2]},
 
 		// bottom Face
-		{positionsList[7],texcoordsList[1]},
-		{positionsList[0],texcoordsList[0]},
+		{positionsList[7],texcoordsList[2]},
+		{positionsList[0],texcoordsList[2]},
 		{positionsList[3],texcoordsList[2]},
-		{positionsList[4],texcoordsList[3]},
+		{positionsList[4],texcoordsList[2]},
 
 		// right Face
-		{positionsList[3],texcoordsList[1]},
-		{positionsList[2],texcoordsList[0]},
-		{positionsList[5],texcoordsList[2]},
+		{positionsList[3],texcoordsList[3]},
+		{positionsList[2],texcoordsList[3]},
+		{positionsList[5],texcoordsList[3]},
 		{positionsList[4],texcoordsList[3]},
 
 		// left Face
-		{positionsList[7],texcoordsList[1]},
-		{positionsList[6],texcoordsList[0]},
-		{positionsList[1],texcoordsList[2]},
+		{positionsList[7],texcoordsList[3]},
+		{positionsList[6],texcoordsList[3]},
+		{positionsList[1],texcoordsList[3]},
 		{positionsList[0],texcoordsList[3]},
 
 	};
@@ -130,7 +133,7 @@ void OGame::onCreate()
 
 	OVertexAttribute attribsList[] = {
 		sizeof(OVec3)/sizeof(f32), // position
-		sizeof(OVec2)/sizeof(f32) // texcoord
+		sizeof(OVec3)/sizeof(f32) // texcoord
 	};
 	m_polygonVAO = m_graphicsEngine->createVertexArrayObject(
 		{

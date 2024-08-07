@@ -48,6 +48,9 @@
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OUniformBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntitySystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGL3D\include\OGL3D\Window\OWindow.h">
@@ -84,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="OGL3D\include\OGL3D\Math\OVec2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntitySystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

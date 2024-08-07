@@ -132,6 +132,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
+    <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntitySystem.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Game\Win32\CWin32Game.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Game\OGame.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\Win32\CWin32GraphicsEngine.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntitySystem.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Game\OGame.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Math\OMat4.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Math\ORect.h" />
