@@ -27,7 +27,7 @@ void OGame::run()
 		}
 		else
 		{
-			onUpdate();
+			onUpdateInternal();
 		}
 	}
 	onQuit();

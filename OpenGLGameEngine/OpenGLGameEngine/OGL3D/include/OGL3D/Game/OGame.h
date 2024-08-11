@@ -14,11 +14,17 @@ public:
 
 	void run();
 	void quit();
+
+	OEntitySystem* getEntitySystem();
+
 protected:
 
 	virtual void onCreate();
-	virtual void onUpdate();
+	virtual void onUpdate(f32 deltaTime) {}
 	virtual void onQuit();
+
+private:
+	void onUpdateInternal();
 
 protected:
 	bool m_isRunning = true;

@@ -50,7 +50,7 @@ void OGame::run()
                 }
             }       
         }
-        onUpdate();
+        onUpdateInternal();
     }
 
     onQuit();

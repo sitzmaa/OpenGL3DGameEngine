@@ -102,7 +102,7 @@ void OGame::run()
             [NSApp sendEvent: event];
         }
 
-        onUpdate();
+        onUpdateInternal();
     }
 
     onQuit();

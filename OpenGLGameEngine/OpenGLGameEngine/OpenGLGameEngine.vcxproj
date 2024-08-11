@@ -107,6 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game\main.cpp" />
+    <ClCompile Include="Game\MyGame.cpp" />
+    <ClCompile Include="Game\MyPlayer.cpp" />
+    <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntity.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Entity\OEntitySystem.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Game\Win32\CWin32Game.cpp" />
     <ClCompile Include="OGL3D\source\OGL3D\Game\OGame.cpp" />
@@ -145,6 +149,10 @@
     <ClCompile Include="OGL3D\source\OGL3D\Graphics\OUniformBuffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Game\MyGame.h" />
+    <ClInclude Include="Game\MyPlayer.h" />
+    <ClInclude Include="OGL3D\include\OGL3D\All.h" />
+    <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntity.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Entity\OEntitySystem.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Game\OGame.h" />
     <ClInclude Include="OGL3D\include\OGL3D\Math\OMat4.h" />

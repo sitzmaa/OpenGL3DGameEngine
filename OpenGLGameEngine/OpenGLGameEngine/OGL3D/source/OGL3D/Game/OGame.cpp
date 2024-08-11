@@ -164,7 +164,7 @@ void OGame::onCreate()
 	m_shader->setUniformBufferSlot("UniformData", 0);
 }
 
-void OGame::onUpdate()
+void OGame::onUpdateInternal()
 {
 	// computing delta time
 	auto currentTime = std::chrono::system_clock::now();
@@ -175,6 +175,13 @@ void OGame::onUpdate()
 	m_previousTime = currentTime;
 
 	auto deltaTime = (f32)elapsedSeconds.count();
+
+
+	onUpdate(deltaTime);
+	m_entitySystem->update(deltaTime);
+
+
+
 
 	m_scale += 0.707f * deltaTime;
 	auto currentScale = abs(sin(m_scale));
@@ -229,4 +236,9 @@ void OGame::onQuit()
 void OGame::quit()
 {
 	m_isRunning = false;
+}
+
+OEntitySystem* OGame::getEntitySystem()
+{
+	return m_entitySystem.get();
 }
